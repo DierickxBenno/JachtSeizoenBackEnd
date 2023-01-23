@@ -2,10 +2,9 @@ namespace MCT.Functions.Models
 {
 	public class GameInfo
 	{
-		private long _RunTime = 0;
 		private long _TimeLimit = 0;
 
-		[JsonProperty("gameId")]
+		[JsonProperty("spelcode")]
 		public string GameId { get; set; }
 
 		[JsonProperty("inProgress")]

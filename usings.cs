@@ -1,0 +1,17 @@
+global using System;
+global using System.IO;
+global using System.Threading.Tasks;
+global using System.Text;
+global using System.Collections.Generic;
+global using System.Linq;
+global using MCT.Functions.Models;
+global using MCT.Functions;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.Azure.WebJobs;
+global using Microsoft.Azure.WebJobs.Extensions.Http;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.Azure.Cosmos;
+global using MQTTnet;
+global using MQTTnet.Client;
+global using Newtonsoft.Json;

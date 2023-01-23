@@ -13,5 +13,8 @@ namespace MCT.Functions.Models
 		[JsonProperty("winner")]
 		public bool Winner { get; set; }
 
+		[JsonProperty("inProgress")]
+		public bool InProgress { get; set; }
+
 	}
 }

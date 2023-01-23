@@ -148,7 +148,7 @@ public class JachtSeizoen
 
     [FunctionName("GetGamefromSpelcode")]
     public static async Task<IActionResult> GetGameFromSpelcode(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/{spelcode}")] HttpRequest req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/code/{spelcode}")] HttpRequest req,
         string spelcode,
         ILogger log)
     {

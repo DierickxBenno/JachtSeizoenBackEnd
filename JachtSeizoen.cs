@@ -107,6 +107,7 @@ public class JachtSeizoen
 
     }
 
+
     [FunctionName("GetGamefromGroep")]
     public static async Task<IActionResult> GetGameFromgroep(
         [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/{groep}")] HttpRequest req,
@@ -126,6 +127,44 @@ public class JachtSeizoen
             var container = client.GetContainer(General.COSMOS_DB_JACHTSEIZOEN, General.COSMOS_CONTAINER_GAMES);
 
             string sql = $"SELECT * FROM c WHERE c.groep = '{groep}'";
+            var iterator = container.GetItemQueryIterator<Game>(sql);
+            var results = new List<Game>();
+
+            while (iterator.HasMoreResults)
+            {
+                var response = await iterator.ReadNextAsync();
+                results.AddRange(response.ToList());
+            }
+
+            return new OkObjectResult(results);
+        }
+        catch (Exception ex)
+        {
+            log.LogError(ex.Message);
+            return new BadRequestObjectResult(ex.Message);
+        }
+
+    }
+
+    [FunctionName("GetGamefromSpelcode")]
+    public static async Task<IActionResult> GetGameFromSpelcode(
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/{spelcode}")] HttpRequest req,
+        string spelcode,
+        ILogger log)
+    {
+        try
+        {
+            var ConnectionString = Environment.GetEnvironmentVariable("CosmosDb");
+
+            CosmosClientOptions options = new CosmosClientOptions()
+            {
+                ConnectionMode = ConnectionMode.Gateway
+            };
+
+            CosmosClient client = new CosmosClient(ConnectionString, options);
+            var container = client.GetContainer(General.COSMOS_DB_JACHTSEIZOEN, General.COSMOS_CONTAINER_GAMES);
+
+            string sql = $"SELECT * FROM c WHERE c.spelcode = '{spelcode}'";
             var iterator = container.GetItemQueryIterator<Game>(sql);
             var results = new List<Game>();
 

@@ -188,10 +188,10 @@ public class JachtSeizoen
 		HandleMessages();
 	}
 
-	public static async Task PublishMessageAsync(string message)
+	public static async Task PublishMessageAsync(string message, string topicEndpoint)
 	{
 		var mqttMessage = new MqttApplicationMessageBuilder()
-			.WithTopic("hetJachtSeizoen/gameResults")
+			.WithTopic($"hetJachtSeizoen/{topicEndpoint}")
 			.WithPayload(message)
 			.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce)
 			.WithRetainFlag()
@@ -278,7 +278,7 @@ public class JachtSeizoen
 		try
 		{
 			string json = await new StreamReader(req.Body).ReadToEndAsync();
-			await PublishMessageAsync(json);
+			await PublishMessageAsync(json, "GameInfo");
 			return new OkObjectResult("published");
 		}
 		catch (Exception ex)

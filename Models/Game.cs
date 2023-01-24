@@ -48,6 +48,12 @@ public class Game
     [JsonProperty("startSpel")]
     public bool startSpel { get; set; }
 
+    [JsonProperty("durationGame")]
+    public bool durationGame { get; set; }
+
+    [JsonProperty("durationLocation")]
+    public bool durationLocation { get; set; }
+
 
 
     [JsonProperty("id")]

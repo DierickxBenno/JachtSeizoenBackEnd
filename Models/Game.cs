@@ -42,8 +42,11 @@ public class Game
     [JsonProperty("winner")]
     public bool Winner { get; set; }
 
-    [JsonProperty("start")]
-    public bool Start { get; set; }
+    [JsonProperty("startSpelkeuze")]
+    public bool startSpelkeuze { get; set; }
+
+    [JsonProperty("startSpel")]
+    public bool startSpel { get; set; }
 
 
 

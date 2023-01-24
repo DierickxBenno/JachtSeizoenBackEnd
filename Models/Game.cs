@@ -49,10 +49,10 @@ public class Game
     public bool startSpel { get; set; }
 
     [JsonProperty("durationGame")]
-    public bool durationGame { get; set; }
+    public int durationGame { get; set; }
 
     [JsonProperty("durationLocation")]
-    public bool durationLocation { get; set; }
+    public int durationLocation { get; set; }
 
 
 

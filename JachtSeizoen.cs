@@ -277,7 +277,7 @@ public class JachtSeizoen
 		try
 		{
 			string json = await new StreamReader(req.Body).ReadToEndAsync();
-			await PublishMessageAsync(json, "GameInfo");
+			await PublishMessageAsync(json, "gameInfo");
 			return new OkObjectResult("published");
 		}
 		catch (Exception ex)

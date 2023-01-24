@@ -9,7 +9,6 @@ namespace MCT.Functions.Models
 			get
 			{
 				List<string> topics = new List<String>();
-				topics.Add("hetJachtSeizoen/gameInfo");
 				topics.Add("hetJachtSeizoen/gameResults");
 				topics.Add("hetJachtSeizoen/deviceAvailibility");
 				return topics;

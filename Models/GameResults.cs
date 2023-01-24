@@ -10,7 +10,7 @@ namespace MCT.Functions.Models
 		[JsonProperty("spelcode")]
 		public string GameId { get; set; }
 
-		[JsonProperty("winner")]
+		[JsonProperty("jagersWinnen")]
 		public bool Winner { get; set; }
 
 		[JsonProperty("inProgress")]

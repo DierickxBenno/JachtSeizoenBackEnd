@@ -31,7 +31,7 @@ public class Game
 	}
 
 	[JsonProperty("startTime")]
-	public DateTime StartTime { get { return DateTime.Now; } }
+	public DateTime StartTime { get; set; }
 
 	[JsonProperty("endTime")]
 	public DateTime EndTime { get; set; }

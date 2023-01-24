@@ -151,9 +151,9 @@ public class JachtSeizoen
 
 
 	//mqtt
-
+	// timer function run on start up
 	[FunctionName("CheckConnection")]
-	public static void CheckConnection([TimerTrigger("*/5 * * * * *")] TimerInfo myTimer, ILogger log)
+	public static void CheckConnection([TimerTrigger("*/30 * * * * *", RunOnStartup = true)] TimerInfo myTimer, ILogger log)
 	{
 		BrokerInfo broker = new BrokerInfo() { BrokerAddress = "13.81.105.139", BrokerPort = 1883 };
 
@@ -222,7 +222,7 @@ public class JachtSeizoen
 					Console.WriteLine("### RECEIVED APPLICATION MESSAGE ###");
 					var payload = Encoding.UTF8.GetString(e.ApplicationMessage.Payload);
 					var topic = e.ApplicationMessage.Topic;
-					if (topic == "hetJachtSeizoen/GameResults")
+					if (topic == "hetJachtSeizoen/gameResults")
 					{
 						Console.WriteLine("Game results received");
 						HandleGameResultsAsync(payload);
@@ -234,14 +234,13 @@ public class JachtSeizoen
 	public static async Task HandleGameResultsAsync(string payload)
 	{
 		GameResults gameResults = JsonConvert.DeserializeObject<GameResults>(payload);
-		Console.WriteLine($"Game results: \n\t" + gameResults.GameId + $"\n\t" + gameResults.Winner);
 		//send to database (datenow, winner, GameId)
 		string spelcode = gameResults.GameId;
-		try
+		try 	 	
 		{
 			string sql = $"SELECT * FROM c WHERE c.spelcode = '{spelcode}'";
 			var iterator = container.GetItemQueryIterator<Game>(sql);
-			var results = new List<Game>();
+			List<Game> results = new List<Game>();
 
 			while (iterator.HasMoreResults)
 			{
@@ -254,13 +253,15 @@ public class JachtSeizoen
 				game.EndTime = DateTime.Now;
 				game.Winner = gameResults.Winner;
 				game.GameInProgress = false;
-				await container.ReplaceItemAsync(game, game.GameId);
+				Console.WriteLine($"Game: \n\t" + game.StartTime + $"\n\t" + game.EndTime);
+				await container.ReplaceItemAsync(game, game.Id);
 			}
-			//publish game info
+			Console.WriteLine("Game updated BITCH");
 
 		}
 		catch (Exception ex)
 		{
+			Console.WriteLine("ERROR BITCH");
 			Console.WriteLine(ex.Message);
 		}
 

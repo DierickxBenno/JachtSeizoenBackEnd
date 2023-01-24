@@ -188,10 +188,10 @@ public class JachtSeizoen
 		HandleMessages();
 	}
 
-	public static async Task PublishMessageAsync(IMqttClient mqttClient, string message)
+	public static async Task PublishMessageAsync(string message, string topicEndpoint)
 	{
 		var mqttMessage = new MqttApplicationMessageBuilder()
-			.WithTopic("hetJachtSeizoen/gameResults")
+			.WithTopic($"hetJachtSeizoen/{topicEndpoint}")
 			.WithPayload(message)
 			.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce)
 			.WithRetainFlag()
@@ -236,7 +236,7 @@ public class JachtSeizoen
 		GameResults gameResults = JsonConvert.DeserializeObject<GameResults>(payload);
 		//send to database (datenow, winner, GameId)
 		string spelcode = gameResults.GameId;
-		try 	 	
+		try
 		{
 			string sql = $"SELECT * FROM c WHERE c.spelcode = '{spelcode}'";
 			var iterator = container.GetItemQueryIterator<Game>(sql);
@@ -266,6 +266,26 @@ public class JachtSeizoen
 		}
 
 	}
+
+	//spel start publish
+
+	[FunctionName("StartSpelMqtt")]
+	public static async Task<IActionResult> StartSpelMqtt(
+		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "gamestart")] HttpRequest req,
+		ILogger log)
+	{
+		try
+		{
+			string json = await new StreamReader(req.Body).ReadToEndAsync();
+			await PublishMessageAsync(json, "GameInfo");
+			return new OkObjectResult("published");
+		}
+		catch (Exception ex)
+		{
+			return new BadRequestObjectResult(ex.Message);
+		}
+	}
+
 
 }
 

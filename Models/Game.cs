@@ -54,6 +54,9 @@ public class Game
     [JsonProperty("durationLocation")]
     public int durationLocation { get; set; }
 
+    [JsonProperty("beginJager")]
+    public bool beginJager { get; set; }
+
 
 
     [JsonProperty("id")]

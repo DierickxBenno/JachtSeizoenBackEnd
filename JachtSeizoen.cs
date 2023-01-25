@@ -277,6 +277,7 @@ public class JachtSeizoen
 		try
 		{
 			string json = await new StreamReader(req.Body).ReadToEndAsync();
+			topic = "hetJachtSeizoen/" + topic;
 			await PublishMessageAsync(json, topic);
 			return new OkObjectResult("published");
 		}

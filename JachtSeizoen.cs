@@ -269,15 +269,16 @@ public class JachtSeizoen
 
 	//spel start publish
 
-	[FunctionName("StartSpelMqtt")]
+	[FunctionName("PublishMqtt")]
 	public static async Task<IActionResult> StartSpelMqtt(
-		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "gamestart")] HttpRequest req,
-		ILogger log)
+		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/{topic}")] HttpRequest req,
+		ILogger log, string topic)
 	{
 		try
 		{
 			string json = await new StreamReader(req.Body).ReadToEndAsync();
-			await PublishMessageAsync(json, "GameInfo");
+			topic = "hetJachtSeizoen/" + topic;
+			await PublishMessageAsync(json, topic);
 			return new OkObjectResult("published");
 		}
 		catch (Exception ex)
@@ -285,8 +286,6 @@ public class JachtSeizoen
 			return new BadRequestObjectResult(ex.Message);
 		}
 	}
-
-
 }
 
 

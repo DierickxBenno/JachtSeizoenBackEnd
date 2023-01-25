@@ -194,7 +194,6 @@ public class JachtSeizoen
 			.WithTopic($"hetJachtSeizoen/{topicEndpoint}")
 			.WithPayload(message)
 			.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce)
-			.WithRetainFlag()
 			.Build();
 
 		if (mqttClient.IsConnected)

@@ -271,13 +271,12 @@ public class JachtSeizoen
 
 	[FunctionName("PublishMqtt")]
 	public static async Task<IActionResult> StartSpelMqtt(
-		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/{topic}")] HttpRequest req,
+		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/mqtt/{topic}")] HttpRequest req,
 		ILogger log, string topic)
 	{
 		try
 		{
 			string json = await new StreamReader(req.Body).ReadToEndAsync();
-			topic = "hetJachtSeizoen/" + topic;
 			await PublishMessageAsync(json, topic);
 			return new OkObjectResult("published");
 		}

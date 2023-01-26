@@ -118,7 +118,6 @@ public class JachtSeizoen
 			log.LogError(ex.Message);
 			return new BadRequestObjectResult(ex.Message);
 		}
-
 	}
 
 	[FunctionName("GetGamefromSpelcode")]
@@ -138,6 +137,7 @@ public class JachtSeizoen
 				var response = await iterator.ReadNextAsync();
 				results.AddRange(response.ToList());
 			}
+
 
 			return new OkObjectResult(results);
 		}

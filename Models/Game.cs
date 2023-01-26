@@ -20,7 +20,7 @@ public class Game
 	public bool GameInProgress { get; set; }
 
 	[JsonProperty("startTime")]
-	public DateTime StartTime { get; set; }
+	public DateTime StartTime { get { return DateTime.Now; } set { StartTime = DateTime.Now; } }
 
 	[JsonProperty("endTime")]
 	public DateTime EndTime { get; set; }
@@ -28,7 +28,7 @@ public class Game
 	[JsonProperty("aantalSpelers")]
 	public int AantalSpelers { get; set; }
 
-	[JsonProperty("winner")]
+	[JsonProperty("jagersWinnen")]
 	public bool Winner { get; set; }
 
 	[JsonProperty("startSpelkeuze")]
@@ -46,10 +46,6 @@ public class Game
 	[JsonProperty("beginJager")]
 	public bool beginJager { get; set; }
 
-
-
 	[JsonProperty("id")]
 	public string Id { get; set; }
-
-
 }

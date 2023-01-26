@@ -26,10 +26,10 @@ public class Game
     public DateTime EndTime { get; set; }
 
     [JsonProperty("startTimeJs")]
-    public int StartTimeJs { get; set; }
+    public long StartTimeJs { get; set; }
 
     [JsonProperty("endTimeJs")]
-    public int EndTimeJs { get; set; }
+    public long EndTimeJs { get; set; }
 
     [JsonProperty("aantalSpelers")]
     public int AantalSpelers { get; set; }

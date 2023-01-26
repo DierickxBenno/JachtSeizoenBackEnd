@@ -52,6 +52,9 @@ public class Game
     [JsonProperty("beginJager")]
     public bool beginJager { get; set; }
 
+    [JsonProperty("endGame")]
+    public bool endGame { get; set; }
+
     [JsonProperty("id")]
     public string Id { get; set; }
 }

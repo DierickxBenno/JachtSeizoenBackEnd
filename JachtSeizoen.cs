@@ -270,8 +270,8 @@ public class JachtSeizoen
 
 	[FunctionName("PublishMqtt")]
 	public static async Task<IActionResult> StartSpelMqtt(
-		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/mqtt/{topic}")] HttpRequest req,
-		ILogger log, string topic)
+		[HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "mqtt/{topic}")] HttpRequest req, string topic,
+		ILogger log)
 	{
 		try
 		{

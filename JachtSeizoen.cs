@@ -151,7 +151,7 @@ public class JachtSeizoen
 
     [FunctionName("GetGamefromDuration")]
     public static async Task<IActionResult> GetGameFromDuration(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/code/{gameDuration}")] HttpRequest req,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/duration/{gameDuration}")] HttpRequest req,
         string gameDuration,
         ILogger log)
     {

@@ -20,7 +20,7 @@ public class Game
 	public bool GameInProgress { get; set; }
 
 	[JsonProperty("startTime")]
-	public DateTime StartTime { get { return DateTime.Now; } set { StartTime = DateTime.Now; } }
+	public DateTime StartTime { get; set; }
 
 	[JsonProperty("endTime")]
 	public DateTime EndTime { get; set; }

@@ -151,13 +151,13 @@ public class JachtSeizoen
 
     [FunctionName("GetGamefromDuration")]
     public static async Task<IActionResult> GetGameFromDuration(
-        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/duration/{gameDuration}")] HttpRequest req,
-        string gameDuration,
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "games/duration/{gameduration}")] HttpRequest req,
+        string gameduration,
         ILogger log)
     {
         try
         {
-            string sql = $"SELECT * FROM c WHERE c.durationGame = {gameDuration} ORDER BY c.gespeeldeTijd";
+            string sql = $"SELECT * FROM c WHERE c.durationGame = {gameduration} ORDER BY c.gespeeldeTijd";
             var iterator = container.GetItemQueryIterator<Game>(sql);
             var results = new List<Game>();
 

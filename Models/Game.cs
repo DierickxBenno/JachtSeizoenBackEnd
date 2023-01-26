@@ -55,6 +55,9 @@ public class Game
     [JsonProperty("endGame")]
     public bool endGame { get; set; }
 
+    [JsonProperty("gespeeldeTijd")]
+    public string gespeeldeTijd { get; set; }
+
     [JsonProperty("id")]
     public string Id { get; set; }
 }

@@ -278,7 +278,7 @@ public class JachtSeizoen
 
 			foreach (Game game in results)
 			{
-				game.EndTime = DateTime.Now;
+				game.EndTimeJs = (long)((DateTimeOffset)DateTime.Now).ToUnixTimeMilliseconds();
 				game.Winner = gameResults.Winner;
 				game.GameInProgress = false;
 				Console.WriteLine($"Game: \n\t" + game.StartTime + $"\n\t" + game.EndTime);

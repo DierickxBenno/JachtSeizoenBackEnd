@@ -182,7 +182,7 @@ public class JachtSeizoen
 	//mqtt
 	// timer function run on start up
 	[FunctionName("CheckConnection")]
-	public static void CheckConnection([TimerTrigger("*/30 * * * * *", RunOnStartup = true)] TimerInfo myTimer, ILogger log)
+	public static void CheckConnection([TimerTrigger("*/30 * * * * *")] TimerInfo myTimer, ILogger log)
 	{
 		BrokerInfo broker = new BrokerInfo() { BrokerAddress = "13.81.105.139", BrokerPort = 1883 };
 
@@ -314,6 +314,3 @@ public class JachtSeizoen
 		}
 	}
 }
-
-
-

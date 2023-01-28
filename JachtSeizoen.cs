@@ -15,6 +15,7 @@ public class JachtSeizoen
 
 	// mqtt
 	static IMqttClient mqttClient = null;
+	static BrokerInfo broker = new BrokerInfo() { BrokerAddress = "13.81.105.139", BrokerPort = 1883 };
 
 	[FunctionName("GetGames")]
 	public static async Task<IActionResult> GetGames(
@@ -182,10 +183,8 @@ public class JachtSeizoen
 	//mqtt
 	// timer function run on start up
 	[FunctionName("CheckConnection")]
-	public static void CheckConnection([TimerTrigger("*/30 * * * * *")] TimerInfo myTimer, ILogger log)
+	public static void CheckConnection([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log)
 	{
-		BrokerInfo broker = new BrokerInfo() { BrokerAddress = "13.81.105.139", BrokerPort = 1883 };
-
 		if (mqttClient == null) Connect(broker);
 		else if (!mqttClient.IsConnected) Connect(broker);
 	}
@@ -204,7 +203,7 @@ public class JachtSeizoen
 		await mqttClient.ConnectAsync(options);
 		while (!mqttClient.IsConnected)
 		{
-			await Task.Delay(1000);
+			await Task.Delay(100);
 			Console.WriteLine("Connecting to MQTT Broker ...");
 		}
 
@@ -219,21 +218,25 @@ public class JachtSeizoen
 
 	public static async Task PublishMessageAsync(string message, string topicEndpoint)
 	{
+
+
 		var mqttMessage = new MqttApplicationMessageBuilder()
 			.WithTopic($"hetJachtSeizoen/{topicEndpoint}")
 			.WithPayload(message)
 			.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce)
 			.Build();
+		if (!mqttClient.IsConnected)
+		{
+			Connect(broker);
+		}
 
 		if (mqttClient.IsConnected)
 		{
 			await mqttClient.PublishAsync(mqttMessage);
 			Console.WriteLine("Message Published");
 		}
-		else
-		{
-			Console.WriteLine("Client not connected");
-		}
+
+
 	}
 
 	public static async Task SubscribeTopicAsync(IMqttClient mqttClient, string topic)
@@ -310,7 +313,7 @@ public class JachtSeizoen
 		}
 		catch (Exception ex)
 		{
-			return new BadRequestObjectResult(ex.Message);
+			return new BadRequestObjectResult($"{ex.Source}: {ex.Message}");
 		}
 	}
 }

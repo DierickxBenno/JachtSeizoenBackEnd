@@ -313,7 +313,7 @@ public class JachtSeizoen
 		}
 		catch (Exception ex)
 		{
-			return new BadRequestObjectResult($"{ex.Source}: {ex.Message}");
+			return new BadRequestObjectResult($"{ex.TargetSite}: {ex.ToString()} : {ex.Message}: {ex.Data}: ");
 		}
 	}
 }

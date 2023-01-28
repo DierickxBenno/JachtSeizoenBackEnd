@@ -185,8 +185,18 @@ public class JachtSeizoen
 	[FunctionName("CheckConnection")]
 	public static void CheckConnection([TimerTrigger("0 */5 * * * *")] TimerInfo myTimer, ILogger log)
 	{
-		if (mqttClient == null) Connect(broker);
-		else if (!mqttClient.IsConnected) Connect(broker);
+		CheckClientConnection();
+	}
+	public static void CheckClientConnection()
+	{
+		if (mqttClient == null)
+		{
+			Connect(broker);
+		}
+		else if (!mqttClient.IsConnected)
+		{
+			Connect(broker);
+		}
 	}
 
 	public static async void Connect(BrokerInfo client)
@@ -225,10 +235,8 @@ public class JachtSeizoen
 			.WithPayload(message)
 			.WithQualityOfServiceLevel(MQTTnet.Protocol.MqttQualityOfServiceLevel.ExactlyOnce)
 			.Build();
-		if (!mqttClient.IsConnected)
-		{
-			Connect(broker);
-		}
+
+		CheckClientConnection();
 
 		if (mqttClient.IsConnected)
 		{
@@ -301,7 +309,7 @@ public class JachtSeizoen
 	//spel start publish
 
 	[FunctionName("PublishMqtt")]
-	public static async Task<IActionResult> StartSpelMqtt(
+	public static async Task<IActionResult> PublishMqtt(
 		[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "mqtt/{topic}")] HttpRequest req, string topic,
 		ILogger log)
 	{
